@@ -1,0 +1,66 @@
+// Metadata
+name := "webapp-components-runner"
+organization := "com.earldouglas"
+
+// Build
+scalacOptions ++= Seq("-feature", "-deprecation")
+scalaVersion := "2.12.18" // https://scalameta.org/metals/blog/2023/07/19/silver#support-for-scala-21218
+
+// webapp-runner
+lazy val webappRunnerVersion =
+  settingKey[String]("webapp-runner version")
+webappRunnerVersion := "9.0.68.1"
+libraryDependencies += "com.heroku" % "webapp-runner" % webappRunnerVersion.value intransitive ()
+
+// Java-only
+Compile / compile / javacOptions ++=
+  Seq(
+    "-source",
+    "1.8",
+    "-target",
+    "1.8",
+    "-g:lines"
+  )
+crossPaths := false // exclude Scala suffix from artifact names
+autoScalaLibrary := false // exclude scala-library from dependencies
+
+// Scalafix
+semanticdbEnabled := true
+semanticdbVersion := scalafixSemanticdb.revision
+scalacOptions += "-Ywarn-unused-import"
+
+// Testing
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.19" % "test"
+Test / fork := true
+
+// Publish to Sonatype, https://www.scala-sbt.org/release/docs/Using-Sonatype.html
+credentials := List(
+  Credentials(Path.userHome / ".sbt" / "sonatype_credentials")
+)
+description := "Launch your webapp without gathering its components"
+developers := List(
+  Developer(
+    id = "earldouglas",
+    name = "James Earl Douglas",
+    email = "james@earldouglas.com",
+    url = url("https://earldouglas.com/")
+  )
+)
+homepage := Some(
+  url("https://github.com/earldouglas/webapp-components-runner")
+)
+licenses := List("ISC" -> url("https://opensource.org/licenses/ISC"))
+organizationHomepage := Some(url("https://earldouglas.com/"))
+organizationName := "James Earl Douglas"
+pomIncludeRepository := { _ => false }
+publishMavenStyle := true
+publishTo := Some(
+  "releases" at "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+)
+scmInfo := Some(
+  ScmInfo(
+    url("https://github.com/earldouglas/webapp-components-runner"),
+    "scm:git@github.com:earldouglas/webapp-components-runner.git"
+  )
+)
+ThisBuild / versionScheme := Some("semver-spec")
