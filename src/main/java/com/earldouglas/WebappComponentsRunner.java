@@ -40,7 +40,7 @@ public class WebappComponentsRunner {
       final Path path =
         FileSystems
           .getDefault()
-          .getPath("target", "empty");
+          .getPath(file.getPath());
       try {
         Files.createDirectory(path);
         return file;
@@ -50,31 +50,36 @@ public class WebappComponentsRunner {
     }
   }
 
+  public static void main(final String[] args) throws Exception {
+    (
+      new WebappComponentsRunner(
+        WebappComponentsConfiguration.load(args[0])
+      )
+    )
+    .start
+    .run();
+  }
+
   public final Runnable start;
   public final Runnable join;
   public final Runnable stop;
 
   public WebappComponentsRunner(
-      final String hostname,
-      final int port,
-      final String contextPath,
-      final File emptyWebappDir,
-      final File emptyClassesDir,
-      final Map<String, File> resourceMap
+      final WebappComponentsConfiguration configuration
   ) {
 
     final Tomcat tomcat = new Tomcat();
-    tomcat.setHostname(hostname);
+    tomcat.setHostname(configuration.hostname);
 
     final Connector connector = new Connector();
-    connector.setPort(port);
+    connector.setPort(configuration.port);
     tomcat.setConnector(connector);
 
     final Context context =
       tomcat
         .addWebapp(
-          contextPath,
-          emptyWebappDir.getAbsolutePath()
+          configuration.contextPath,
+          configuration.emptyWebappDir.getAbsolutePath()
         );
 
     // Set ClassLoader to prevent `ClassNotFoundException: ServletDef`
@@ -88,12 +93,12 @@ public class WebappComponentsRunner {
       new DirResourceSet(
         webResourceRoot,
         "/WEB-INF/classes",
-        emptyClassesDir.getAbsolutePath(),
+        configuration.emptyClassesDir.getAbsolutePath(),
         "/"
       )
     );
 
-    resourceMap
+    configuration.resourceMap
       .forEach((path, file) -> {
         if (file.exists() && file.isFile()) {
           webResourceRoot.addJarResources(

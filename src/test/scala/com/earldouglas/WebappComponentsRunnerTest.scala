@@ -5,7 +5,6 @@ import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
 import java.io.File
-import scala.collection.JavaConverters._
 
 class WebappComponentsRunnerTest
     extends AnyFunSuite
@@ -15,24 +14,10 @@ class WebappComponentsRunnerTest
   lazy val emptyDir: File =
     WebappComponentsRunner.mkdir(new File("target", "empty"))
 
-  lazy val runner = {
-
-    val webappPath: String =
-      "src/test/fakeproject/src/main/webapp"
-
+  lazy val runner: WebappComponentsRunner =
     new WebappComponentsRunner(
-      "localhost",
-      8989,
-      "",
-      emptyDir,
-      emptyDir,
-      Map(
-        "bar.html" -> new File(s"${webappPath}/bar.html"),
-        "foo.html" -> new File(s"${webappPath}/foo.html"),
-        "baz/raz.css" -> new File(s"${webappPath}/baz/raz.css")
-      ).asJava
+      WebappComponentsConfiguration.load("webapp-components.properties")
     )
-  }
 
   override def beforeAll(): Unit = {
     runner.start.run()
