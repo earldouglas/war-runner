@@ -4,7 +4,7 @@ organization := "com.earldouglas"
 
 // Build
 scalacOptions ++= Seq("-feature", "-deprecation")
-scalaVersion := "2.12.18" // https://scalameta.org/metals/blog/2023/07/19/silver#support-for-scala-21218
+scalaVersion := "2.12.20" // https://scalameta.org/metals/blog/2023/07/19/silver#support-for-scala-21218
 
 // webapp-runner
 lazy val webappRunnerVersion =
