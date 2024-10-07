@@ -4,35 +4,22 @@ import org.scalatest.BeforeAndAfterAll
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
-import java.io.File
-import scala.collection.JavaConverters._
-
 class WebappComponentsRunnerTest
     extends AnyFunSuite
     with Matchers
     with BeforeAndAfterAll {
 
-  lazy val emptyDir: File =
-    WebappComponentsRunner.mkdir(new File("target", "empty"))
-
-  lazy val runner = {
-
-    val webappPath: String =
-      "src/test/fakeproject/src/main/webapp"
-
-    new WebappComponentsRunner(
-      "localhost",
-      8989,
-      "",
-      emptyDir,
-      emptyDir,
-      Map(
-        "bar.html" -> new File(s"${webappPath}/bar.html"),
-        "foo.html" -> new File(s"${webappPath}/foo.html"),
-        "baz/raz.css" -> new File(s"${webappPath}/baz/raz.css")
-      ).asJava
-    )
+  lazy val configuration: WebappComponentsConfiguration = {
+    val c =
+      WebappComponentsConfiguration
+        .load("webapp-components.properties")
+    WebappComponentsRunner.mkdir(c.emptyWebappDir)
+    WebappComponentsRunner.mkdir(c.emptyClassesDir)
+    c
   }
+
+  lazy val runner: WebappComponentsRunner =
+    new WebappComponentsRunner(configuration)
 
   override def beforeAll(): Unit = {
     runner.start.run()
