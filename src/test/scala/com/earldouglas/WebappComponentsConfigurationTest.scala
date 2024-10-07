@@ -23,7 +23,9 @@ class WebappComponentsConfigurationTest
     configuration.emptyClassesDir shouldBe (new File("target/empty"))
     configuration.resourceMap.asScala shouldBe
       List("bar.html", "foo.html", "baz/raz.css")
-        .map(x => (x -> new File(s"src/test/fakeproject/src/main/webapp/${x}")))
+        .map(x =>
+          (x -> new File(s"src/test/fakeproject/src/main/webapp/${x}"))
+        )
         .toMap
   }
 }
