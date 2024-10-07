@@ -4,20 +4,22 @@ import org.scalatest.BeforeAndAfterAll
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 
-import java.io.File
-
 class WebappComponentsRunnerTest
     extends AnyFunSuite
     with Matchers
     with BeforeAndAfterAll {
 
-  lazy val emptyDir: File =
-    WebappComponentsRunner.mkdir(new File("target", "empty"))
+  lazy val configuration: WebappComponentsConfiguration = {
+    val c =
+      WebappComponentsConfiguration
+        .load("webapp-components.properties")
+    WebappComponentsRunner.mkdir(c.emptyWebappDir)
+    WebappComponentsRunner.mkdir(c.emptyClassesDir)
+    c
+  }
 
   lazy val runner: WebappComponentsRunner =
-    new WebappComponentsRunner(
-      WebappComponentsConfiguration.load("webapp-components.properties")
-    )
+    new WebappComponentsRunner(configuration)
 
   override def beforeAll(): Unit = {
     runner.start.run()
