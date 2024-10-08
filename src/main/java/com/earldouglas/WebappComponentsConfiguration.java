@@ -20,7 +20,7 @@ public class WebappComponentsConfiguration {
 
   public static WebappComponentsConfiguration load(
       final String configurationFilename
-  ) throws Exception {
+  ) throws IOException {
     return WebappComponentsConfiguration.load(
       new File(configurationFilename)
     );
