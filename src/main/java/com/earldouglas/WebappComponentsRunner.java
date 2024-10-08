@@ -1,5 +1,11 @@
 package com.earldouglas;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import org.apache.catalina.Context;
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.WebResourceRoot;
@@ -9,24 +15,14 @@ import org.apache.catalina.webresources.DirResourceSet;
 import org.apache.catalina.webresources.FileResourceSet;
 import org.apache.catalina.webresources.StandardRoot;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.FileAlreadyExistsException;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Map;
-
-/** Launches a webapp composed of in-place resources, classes, and
-  * libraries.
-  *
-  * emptyWebappDir and emptyClassesDir need to point to one or two empty
-  * directories. They're not used to serve any content, but they are
-  * required by Tomcat's internals.
-  *
-  * To use a root context path (i.e. /), set contextPath to the empty
-  * string for some reason.
-  */
+/**
+ * Launches a webapp composed of in-place resources, classes, and libraries.
+ *
+ * <p>emptyWebappDir and emptyClassesDir need to point to one or two empty directories. They're not
+ * used to serve any content, but they are required by Tomcat's internals.
+ *
+ * <p>To use a root context path (i.e. /), set contextPath to the empty string for some reason.
+ */
 public class WebappComponentsRunner {
 
   private static File mkdir(final File file) throws IOException {
@@ -37,10 +33,7 @@ public class WebappComponentsRunner {
         return file;
       }
     } else {
-      final Path path =
-        FileSystems
-          .getDefault()
-          .getPath(file.getPath());
+      final Path path = FileSystems.getDefault().getPath(file.getPath());
       try {
         Files.createDirectory(path);
         return file;
@@ -51,22 +44,15 @@ public class WebappComponentsRunner {
   }
 
   public static void main(final String[] args) throws IOException {
-    (
-      new WebappComponentsRunner(
-        WebappComponentsConfiguration.load(args[0])
-      )
-    )
-    .start
-    .run();
+    (new WebappComponentsRunner(WebappComponentsConfiguration.load(args[0]))).start.run();
   }
 
   public final Runnable start;
   public final Runnable join;
   public final Runnable stop;
 
-  public WebappComponentsRunner(
-      final WebappComponentsConfiguration configuration
-  ) throws IOException {
+  public WebappComponentsRunner(final WebappComponentsConfiguration configuration)
+      throws IOException {
 
     mkdir(configuration.emptyWebappDir);
     mkdir(configuration.emptyClassesDir);
@@ -79,78 +65,65 @@ public class WebappComponentsRunner {
     tomcat.setConnector(connector);
 
     final Context context =
-      tomcat
-        .addWebapp(
-          configuration.contextPath,
-          configuration.emptyWebappDir.getAbsolutePath()
-        );
+        tomcat.addWebapp(configuration.contextPath, configuration.emptyWebappDir.getAbsolutePath());
 
-    final WebResourceRoot webResourceRoot =
-      new StandardRoot(context);
+    final WebResourceRoot webResourceRoot = new StandardRoot(context);
 
     webResourceRoot.addJarResources(
-      new DirResourceSet(
-        webResourceRoot,
-        "/WEB-INF/classes",
-        configuration.emptyClassesDir.getAbsolutePath(),
-        "/"
-      )
-    );
+        new DirResourceSet(
+            webResourceRoot,
+            "/WEB-INF/classes",
+            configuration.emptyClassesDir.getAbsolutePath(),
+            "/"));
 
-    configuration.resourceMap
-      .forEach((path, file) -> {
-        if (file.exists() && file.isFile()) {
-          webResourceRoot.addJarResources(
-            new FileResourceSet(
-              webResourceRoot,
-              "/" + path,
-              file.getAbsolutePath(),
-              "/"
-            )
-          );
-        }
-      });
+    configuration.resourceMap.forEach(
+        (path, file) -> {
+          if (file.exists() && file.isFile()) {
+            webResourceRoot.addJarResources(
+                new FileResourceSet(webResourceRoot, "/" + path, file.getAbsolutePath(), "/"));
+          }
+        });
 
     context.setResources(webResourceRoot);
 
     start =
-      new Runnable() {
-        @Override
-        public void run() {
-          try {
-            tomcat.start();
-          } catch (final LifecycleException e) {
-            throw new RuntimeException(e);
+        new Runnable() {
+          @Override
+          public void run() {
+            try {
+              tomcat.start();
+            } catch (final LifecycleException e) {
+              throw new RuntimeException(e);
+            }
           }
-        }
-      };
-    
+        };
+
     join =
-      new Runnable() {
-        @Override
-        public void run() {
-          tomcat.getServer().await();
-        }
-      };
-    
-    stop =
-      new Runnable() {
-        @Override
-        public void run() {
-          try {
-
-            connector.stop();
-            context.stop();
-            tomcat.stop();
-
-            connector.destroy();
-            context.destroy();
-            tomcat.destroy();
-
-          } catch (final LifecycleException e) {
-            throw new RuntimeException(e);
+        new Runnable() {
+          @Override
+          public void run() {
+            tomcat.getServer().await();
           }
-        }
-      };
+        };
+
+    stop =
+        new Runnable() {
+          @Override
+          public void run() {
+            try {
+
+              connector.stop();
+              context.stop();
+              tomcat.stop();
+
+              connector.destroy();
+              context.destroy();
+              tomcat.destroy();
+
+            } catch (final LifecycleException e) {
+              throw new RuntimeException(e);
+            }
+          }
+        };
   }
 }
