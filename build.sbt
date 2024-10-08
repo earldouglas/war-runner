@@ -16,9 +16,9 @@ libraryDependencies += "com.heroku" % "webapp-runner" % webappRunnerVersion.valu
 Compile / compile / javacOptions ++=
   Seq(
     "-source",
-    "1.8",
+    "11",
     "-target",
-    "1.8",
+    "11",
     "-g:lines"
   )
 crossPaths := false // exclude Scala suffix from artifact names
