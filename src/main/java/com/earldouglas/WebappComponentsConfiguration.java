@@ -99,9 +99,9 @@ public class WebappComponentsConfiguration {
    * contextPath=
    * emptyWebappDir=target/empty
    * emptyClassesDir=target/empty
-   * resourceMap=bar.html->src/test/fakeproject/src/main/webapp/bar.html,\
-   *             foo.html->src/test/fakeproject/src/main/webapp/foo.html,\
-   *             baz/raz.css->src/test/fakeproject/src/main/webapp/baz/raz.css
+   * resourceMap=bar.html-&gt;src/test/fakeproject/src/main/webapp/bar.html,\
+   *             foo.html-&gt;src/test/fakeproject/src/main/webapp/foo.html,\
+   *             baz/raz.css-&gt;src/test/fakeproject/src/main/webapp/baz/raz.css
    * </pre>
    *
    * @param configurationFile the configuration file to load
