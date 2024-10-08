@@ -15,7 +15,8 @@ class WebappComponentsConfigurationTest
   test("load") {
 
     val configuration: WebappComponentsConfiguration =
-      WebappComponentsConfiguration.load("webapp-components.properties")
+      WebappComponentsConfiguration
+        .load("src/test/resources/webapp-components.properties")
 
     configuration.hostname shouldBe "localhost"
     configuration.port shouldBe 8989

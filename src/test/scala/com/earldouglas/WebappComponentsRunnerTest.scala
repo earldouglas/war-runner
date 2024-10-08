@@ -12,7 +12,7 @@ class WebappComponentsRunnerTest
   lazy val configuration: WebappComponentsConfiguration = {
     val c =
       WebappComponentsConfiguration
-        .load("webapp-components.properties")
+        .load("src/test/resources/webapp-components.properties")
     WebappComponentsRunner.mkdir(c.emptyWebappDir)
     WebappComponentsRunner.mkdir(c.emptyClassesDir)
     c

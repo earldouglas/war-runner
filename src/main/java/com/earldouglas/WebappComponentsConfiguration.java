@@ -21,18 +21,9 @@ public class WebappComponentsConfiguration {
   public static WebappComponentsConfiguration load(
       final String configurationFilename
   ) throws Exception {
-
-    final URI configurationFileUri =
-      WebappComponentsConfiguration
-        .class
-        .getClassLoader()
-        .getResource(configurationFilename)
-        .toURI();
-
-    final File configurationFile =
-      new File(configurationFileUri);
-
-    return WebappComponentsConfiguration.load(configurationFile);
+    return WebappComponentsConfiguration.load(
+      new File(configurationFilename)
+    );
   }
 
   private static Map<String, File> parseResourceMap(
