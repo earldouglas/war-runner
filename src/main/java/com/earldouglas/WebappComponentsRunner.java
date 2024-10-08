@@ -46,10 +46,10 @@ public class WebappComponentsRunner {
   public static void main(final String[] args) throws IOException {
 
     final WebappComponentsConfiguration webappComponentsConfiguration =
-      WebappComponentsConfiguration.load(args[0]);
+        WebappComponentsConfiguration.load(args[0]);
 
     final WebappComponentsRunner webappComponentsRunner =
-      new WebappComponentsRunner(webappComponentsConfiguration);
+        new WebappComponentsRunner(webappComponentsConfiguration);
 
     webappComponentsRunner.start.run();
     webappComponentsRunner.join.run();
