@@ -43,6 +43,13 @@ public class WebappComponentsRunner {
     }
   }
 
+  /**
+   * Load configuration from the file in the first argument, and use it to start a new
+   * WebappComponentsRunner.
+   *
+   * @param args the configuration filename to load and run
+   * @throws IOException if something goes wrong
+   */
   public static void main(final String[] args) throws IOException {
 
     final WebappComponentsConfiguration webappComponentsConfiguration =
@@ -55,10 +62,21 @@ public class WebappComponentsRunner {
     webappComponentsRunner.join.run();
   }
 
+  /** A handle for starting the instance's server. */
   public final Runnable start;
+
+  /** A handle for joining the instance's server. */
   public final Runnable join;
+
+  /** A handle for stopping the instance's server. */
   public final Runnable stop;
 
+  /**
+   * Construct a new WebappComponentsRunner using the given configuration.
+   *
+   * @param configuration the configuration to run
+   * @throws IOException if something goes wrong
+   */
   public WebappComponentsRunner(final WebappComponentsConfiguration configuration)
       throws IOException {
 
