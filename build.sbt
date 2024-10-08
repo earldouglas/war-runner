@@ -9,8 +9,8 @@ scalaVersion := "2.12.20" // https://scalameta.org/metals/blog/2023/07/19/silver
 // webapp-runner
 lazy val webappRunnerVersion =
   settingKey[String]("webapp-runner version")
-webappRunnerVersion := "9.0.93.0"
-libraryDependencies += "com.heroku" % "webapp-runner" % webappRunnerVersion.value intransitive ()
+webappRunnerVersion := "10.1.28.0"
+libraryDependencies += "com.heroku" % "webapp-runner" % webappRunnerVersion.value
 
 // Java-only
 Compile / compile / javacOptions ++=
