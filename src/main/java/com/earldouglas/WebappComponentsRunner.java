@@ -29,7 +29,7 @@ import java.util.Map;
   */
 public class WebappComponentsRunner {
 
-  public static File mkdir(final File file) throws IOException {
+  private static File mkdir(final File file) throws IOException {
     if (file.exists()) {
       if (!file.isDirectory()) {
         throw new FileAlreadyExistsException(file.getPath());
@@ -50,7 +50,7 @@ public class WebappComponentsRunner {
     }
   }
 
-  public static void main(final String[] args) throws Exception {
+  public static void main(final String[] args) throws IOException {
     (
       new WebappComponentsRunner(
         WebappComponentsConfiguration.load(args[0])
@@ -66,7 +66,10 @@ public class WebappComponentsRunner {
 
   public WebappComponentsRunner(
       final WebappComponentsConfiguration configuration
-  ) {
+  ) throws IOException {
+
+    mkdir(configuration.emptyWebappDir);
+    mkdir(configuration.emptyClassesDir);
 
     final Tomcat tomcat = new Tomcat();
     tomcat.setHostname(configuration.hostname);

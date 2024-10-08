@@ -9,14 +9,9 @@ class WebappComponentsRunnerTest
     with Matchers
     with BeforeAndAfterAll {
 
-  lazy val configuration: WebappComponentsConfiguration = {
-    val c =
-      WebappComponentsConfiguration
-        .load("src/test/resources/webapp-components.properties")
-    WebappComponentsRunner.mkdir(c.emptyWebappDir)
-    WebappComponentsRunner.mkdir(c.emptyClassesDir)
-    c
-  }
+  lazy val configuration: WebappComponentsConfiguration =
+    WebappComponentsConfiguration
+      .load("src/test/resources/webapp-components.properties")
 
   lazy val runner: WebappComponentsRunner =
     new WebappComponentsRunner(configuration)
