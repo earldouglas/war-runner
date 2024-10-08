@@ -44,7 +44,11 @@ public class WebappComponentsRunner {
   }
 
   public static void main(final String[] args) throws IOException {
-    (new WebappComponentsRunner(WebappComponentsConfiguration.load(args[0]))).start.run();
+    final WebappComponentsRunner webappComponentsRunner =
+        new WebappComponentsRunner(WebappComponentsConfiguration.load(args[0]));
+
+    webappComponentsRunner.start.run();
+    webappComponentsRunner.join.run();
   }
 
   public final Runnable start;
