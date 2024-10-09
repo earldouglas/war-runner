@@ -3,6 +3,11 @@
 
 # Webapp Components Runner
 
+Webapp Components Runner builds on
+[webapp-runner](https://github.com/heroku/webapp-runner) to support
+serving a webapp directly from its components (resources, classes,
+and libraries) without needing to packag a .war file.
+
 ## Features
 
 * Run a servlet-based webapp without packaging a .war file
@@ -19,6 +24,8 @@
 ## Versioning
 
 Webapp Components Runner follows `com.heroku:webapp-runner` versions,
-appending an additional number for its own versioning.  For example,
-`webapp-components-runner` version `10.1.28.0.x` tracks `webapp-runner`
-version `10.1.28.0`.
+appending an additional number for its own versioning.
+
+For example, `webapp-components-runner` version `10.1.28.0.x` tracks
+`webapp-runner` version `10.1.28.0`, which tracks Tomcat version
+`10.1.28`.
