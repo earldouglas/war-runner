@@ -3,6 +3,7 @@
 ## Testing
 
 ```
+$ nix-shell
 $ sbt test
 ```
 
