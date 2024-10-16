@@ -16,7 +16,7 @@ class WarConfigurationTest
     val configuration: WarConfiguration =
       WarConfiguration.load("src/test/resources/war.properties")
 
-    configuration.port shouldBe 8988 
+    configuration.port shouldBe 8988
 
     configuration.warFile shouldBe
       new File("src/test/fakeproject/src/main/webapp")

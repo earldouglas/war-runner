@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 
 public class WarConfiguration {
@@ -23,8 +21,7 @@ public class WarConfiguration {
    * @throws IOException if something goes wrong
    * @return WarConfiguration a loaded configuration
    */
-  public static WarConfiguration load(final String configurationFilename)
-      throws IOException {
+  public static WarConfiguration load(final String configurationFilename) throws IOException {
     return WarConfiguration.load(new File(configurationFilename));
   }
 
@@ -49,8 +46,7 @@ public class WarConfiguration {
    * @throws IOException if something goes wrong
    * @return WarConfiguration a loaded configuration
    */
-  public static WarConfiguration load(final File configurationFile)
-      throws IOException {
+  public static WarConfiguration load(final File configurationFile) throws IOException {
 
     final InputStream inputStream = new FileInputStream(configurationFile);
 
@@ -59,8 +55,7 @@ public class WarConfiguration {
 
     return new WarConfiguration(
         Integer.parseInt(properties.getProperty("port")),
-        new File(properties.getProperty("warFile"))
-    );
+        new File(properties.getProperty("warFile")));
   }
 
   /**
@@ -69,10 +64,7 @@ public class WarConfiguration {
    * @param port the port to use for the server, e.g. 8080
    * @param warFile the .war file to serve
    */
-  public WarConfiguration(
-      final int port,
-      final File warFile
-  ) {
+  public WarConfiguration(final int port, final File warFile) {
     this.port = port;
     this.warFile = warFile;
   }
