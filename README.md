@@ -1,5 +1,6 @@
 [![Build status](https://github.com/earldouglas/war-runner/workflows/build/badge.svg)](https://github.com/earldouglas/war-runner/actions)
-[![Latest version](https://img.shields.io/github/tag/earldouglas/war-runner.svg)](https://repo1.maven.org/maven2/com/earldouglas/war-runner/)
+[![Latest version](https://img.shields.io/github/v/tag/earldouglas/war-runner)](https://github.com/earldouglas/war-runner/tags)
+[![Maven Central](https://img.shields.io/maven-central/v/com.earldouglas/war-runner)](https://repo1.maven.org/maven2/com/earldouglas/war-runner)
 
 # WAR Runner
 
