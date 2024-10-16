@@ -124,7 +124,8 @@ public class WebappComponentsConfiguration {
         properties.getProperty("contextPath"),
         new File(properties.getProperty("emptyWebappDir")),
         new File(properties.getProperty("emptyClassesDir")),
-        resourceMap);
+        resourceMap
+    );
   }
 
   /**
