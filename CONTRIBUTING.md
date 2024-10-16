@@ -9,7 +9,7 @@ $ sbt test
 
 ## Publishing
 
-webapp-components-runner uses the process outlined in the [Using
+war-runner uses the process outlined in the [Using
 Sonatype](https://www.scala-sbt.org/release/docs/Using-Sonatype.html)
 section of the sbt manual for publishing to Maven Central via Sonatype.
 
@@ -37,7 +37,7 @@ Release it:
 
 Wait for it to be synced to Maven Central:
 
-* <https://repo1.maven.org/maven2/com/earldouglas/webapp-components-runner/>
+* <https://repo1.maven.org/maven2/com/earldouglas/war-runner/>
 
 Update the documentation:
 
