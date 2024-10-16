@@ -6,7 +6,7 @@ public class WarRunner {
    * Load configuration from the file in the first argument, and use it to start a new WarRunner.
    *
    * @param args the configuration filename to load and run
-   * @throws IOException if something goes wrong
+   * @throws Exception if something goes wrong
    */
   public static void main(final String[] args) throws Exception {
 
