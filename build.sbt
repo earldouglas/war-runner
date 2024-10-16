@@ -1,5 +1,5 @@
 // Metadata
-name := "webapp-components-runner"
+name := "war-runner"
 organization := "com.earldouglas"
 
 // Build
@@ -47,7 +47,7 @@ developers := List(
   )
 )
 homepage := Some(
-  url("https://github.com/earldouglas/webapp-components-runner")
+  url("https://github.com/earldouglas/war-runner")
 )
 licenses := List("ISC" -> url("https://opensource.org/licenses/ISC"))
 organizationHomepage := Some(url("https://earldouglas.com/"))
@@ -59,8 +59,8 @@ publishTo := Some(
 )
 scmInfo := Some(
   ScmInfo(
-    url("https://github.com/earldouglas/webapp-components-runner"),
-    "scm:git@github.com:earldouglas/webapp-components-runner.git"
+    url("https://github.com/earldouglas/war-runner"),
+    "scm:git@github.com:earldouglas/war-runner.git"
   )
 )
 ThisBuild / versionScheme := Some("semver-spec")
